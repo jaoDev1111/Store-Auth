@@ -2,6 +2,8 @@ import { useState } from "react";
 import { BaseInput } from "../components/BaseInput";
 import usePost from "../hooks/usePost";
 import { useAuthStore } from "../stores/authStore";
+import { BaseButton } from "../components/BaseButton";
+import { BaseContainer } from "../components/BaseContainer";
 
 interface IUserLogin {
   email: string;
@@ -21,6 +23,10 @@ export default function LoginPage() {
       password,
     };
 
+    console.log(userData);
+    // Daria para ver o token recebido do backend no console
+    console.log(responseToken);
+
     try {
       registerData<IUserLogin>({ url: "login", data: userData });
       useAuthStore.getState().login({ email, token: responseToken });
@@ -33,25 +39,46 @@ export default function LoginPage() {
   };
 
   return (
-    <div>
-      <form onSubmit={handleLogin}>
-        <BaseInput
-          value={email}
-          type="email"
-          placeholder="Insira seu endereço de Email"
-          onChange={setEmail}
-          label="Email:"
-        />
+    <BaseContainer
+      alignContent="center"
+      className="bg-[#f1f1f1] h-screen"
+      fullWidth={true}
+    >
+      <BaseContainer size="sm" alignContent="center" direction="col">
+        <form className="flex flex-col gap-3 w-full" onSubmit={handleLogin}>
+          <BaseInput
+            id="email"
+            autoComplete="email"
+            autoFocus
+            value={email}
+            type="email"
+            placeholder="Insira seu endereço de Email"
+            onChange={setEmail}
+            label="Email:"
+            labelFor="email"
+            requiredLabel={true}
+          />
 
-        <BaseInput
-          value={password}
-          type="password"
-          placeholder="Insira seu endereço de password"
-          onChange={setPassword}
-          label="Password:"
-        />
-        <button type="submit">Entrar</button>
-      </form>
-    </div>
+          <BaseInput
+            id="password"
+            value={password}
+            type="password"
+            placeholder="Insira seu endereço de password"
+            onChange={setPassword}
+            label="Password:"
+            labelFor="password"
+          />
+
+          <BaseButton
+            type="submit"
+            className="rounded-sm mt-4"
+            variant="primary"
+            size="md"
+          >
+            Fazer Login
+          </BaseButton>
+        </form>
+      </BaseContainer>
+    </BaseContainer>
   );
 }

@@ -6,14 +6,29 @@ export default function usePost() {
   const [error, setError] = useState<Error | null>(null);
   const [responseToken, setResponseToken] = useState("");
 
-  async function registerData<T>({ url, data }: { url: string; data: T }) {
+  async function registerData<T>({
+    url,
+    data,
+    token,
+  }: {
+    url: string;
+    data: T;
+    token?: string;
+  }) {
+    const headers: HeadersInit = {
+      "Content-Type": "application/json",
+    };
+
+    // Em caso de ter token, adiciona no header da requisição.
+    if (token) {
+      headers["Authorization"] = `Bearer ${token}`;
+    }
+
     try {
       // Faz a requisição POST para o endpoint fornecido
       const res = await fetch(`https://api.example.com/${url}`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers,
         body: JSON.stringify(data),
       });
 

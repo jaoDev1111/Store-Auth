@@ -17,9 +17,9 @@ const PrivateRoute = ({ children }: ProtectedRouteProps) => {
     }
   }, [isAuthenticated, navigate, token]);
 
-  // Opcional: mostrar loading enquanto verifica
+  // Da pra colocar um loading enquanto carrega em
   if (!isAuthenticated || !token) {
-    return <div>Carregando...</div>; // ou null, ou um spinner
+    return <div>Carregando...</div>; //  spinner / componente de loading
   }
 
   return children;
