@@ -3,7 +3,7 @@ import type { HTMLAttributes } from "react";
 
 type ContainerProps = {
   children: React.ReactNode;
-  size?: "sm" | "md" | "lg" | "xl";
+  size?: "sm" | "md" | "lg" | "xl" | "xs";
   alignContent?: "start" | "center" | "end" | "between" | "around";
   direction?: "row" | "col";
   fullWidth?: boolean;
@@ -20,6 +20,7 @@ export const BaseContainer = ({
   ...props
 }: ContainerProps) => {
   const sizeClasses = {
+    xs: "max-w-[400px] md:max-w-[480px]", // 480px
     sm: "max-w-screen-sm", // 640px
     md: "max-w-screen-md", // 768px
     lg: "max-w-screen-lg", // 1024px

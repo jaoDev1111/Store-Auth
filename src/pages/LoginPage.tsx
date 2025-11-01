@@ -13,6 +13,7 @@ interface IUserLogin {
 export default function LoginPage() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
+  const [isVisiblePassword, setIsVisiblePassword] = useState<boolean>(false);
   const { registerData, responseToken } = usePost();
 
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -24,6 +25,7 @@ export default function LoginPage() {
     };
 
     console.log(userData);
+    console.log(e);
     // Daria para ver o token recebido do backend no console
     console.log(responseToken);
 
@@ -41,18 +43,26 @@ export default function LoginPage() {
   return (
     <BaseContainer
       alignContent="center"
-      className="bg-[#f1f1f1] h-screen"
+      className="bg-[#f1f1f1] h-screen px-4"
       fullWidth={true}
     >
-      <BaseContainer size="sm" alignContent="center" direction="col">
-        <form className="flex flex-col gap-3 w-full" onSubmit={handleLogin}>
+      <BaseContainer
+        className="border border-zinc-100 px-0 py-6 md:px-8 md:py-22 bg-white/20 shadow-xs rounded-md"
+        size="xs"
+        alignContent="center"
+        direction="col"
+      >
+        <form
+          className="flex flex-col gap-3 w-full md:w-[80%] px-8 md:px-0"
+          onSubmit={handleLogin}
+        >
           <BaseInput
             id="email"
             autoComplete="email"
             autoFocus
             value={email}
             type="email"
-            placeholder="Insira seu endereço de Email"
+            placeholder="E-mail"
             onChange={setEmail}
             label="Email:"
             labelFor="email"
@@ -62,16 +72,20 @@ export default function LoginPage() {
           <BaseInput
             id="password"
             value={password}
-            type="password"
-            placeholder="Insira seu endereço de password"
+            type={isVisiblePassword ? "text" : "password"}
+            placeholder="Senha"
             onChange={setPassword}
             label="Password:"
             labelFor="password"
+            passwordToggleVisible={true} // habilita o toggle de senha
+            isPasswordVisible={isVisiblePassword} // indica se o password está visível
+            onTogglePassword={() => setIsVisiblePassword((prev) => !prev)}
+            requiredLabel={true}
           />
 
           <BaseButton
             type="submit"
-            className="rounded-sm mt-4"
+            className="rounded-sm mt-6"
             variant="primary"
             size="md"
           >

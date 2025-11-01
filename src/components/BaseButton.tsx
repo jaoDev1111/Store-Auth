@@ -5,6 +5,7 @@ type ButtonProps = {
   children: React.ReactNode;
   size?: "sm" | "md" | "lg" | "icon";
   variant?: "primary" | "secondary" | "destructive" | "outline" | "ghost";
+
   disabled?: boolean;
   className?: string;
 } & ButtonHTMLAttributes<HTMLButtonElement>;
@@ -25,7 +26,7 @@ export const BaseButton = ({
     <button
       disabled={disabled}
       className={clsx(
-        "text-sm cursor-pointer inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2",
+        "text-xs md:text-sm cursor-pointer inline-flex items-center justify-center rounded-md font-medium transition-colors focus:outline-none",
         {
           // Variantes
           "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-500":
@@ -36,8 +37,7 @@ export const BaseButton = ({
             variant === "destructive",
           "border border-gray-300 bg-white text-gray-900 hover:bg-gray-100 focus:ring-gray-400":
             variant === "outline",
-          "bg-transparent text-gray-600 hover:bg-gray-100 focus:ring-gray-400":
-            variant === "ghost",
+          "bg-transparent text-gray-600": variant === "ghost",
 
           // Tamanhos
           "px-3 py-1 text-sm": size === "sm",
